@@ -1,4 +1,29 @@
-<html>
-  <h1>Slide decks</h1>
-  <p>One day there will be slides, right here..</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slides</title>
+  <style>
+    :root { --bg:#fff; --fg:#1d1d1f; --muted:#6b6b72; --line:#e3e3e8; --accent:#2a5bd7; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#121214; --fg:#ececf0; --muted:#9a9aa3; --line:#2b2b31; --accent:#7ea2ff; } }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, sans-serif; }
+    main { max-width:42rem; margin:0 auto; padding:3rem 16px; }
+    h1 { font-size:1.75rem; margin:0 0 1.5rem; }
+    ul { list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+    li { border-bottom:1px solid var(--line); }
+    a { display:flex; justify-content:space-between; gap:1rem; padding:.9rem 0; color:var(--fg); text-decoration:none; }
+    a:hover span { color:var(--accent); }
+    time { color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Slides</h1>
+    <ul>
+      <li><a href="decks/aiducation/"><span>AIducation</span><time>2026-10-07</time></a></li>
+    </ul>
+  </main>
+</body>
 </html>
