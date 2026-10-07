@@ -1,0 +1,48 @@
+name: Process exports
+
+# Drop an export folder into incoming/<Deck name>/ and push (or upload via the GitHub web UI).
+# This workflow moves it into decks/, links it to the shared reveal.js files,
+# regenerates index.html, verifies all references and commits the result.
+# It also verifies the structure on every push that touches decks/ or scripts/.
+
+on:
+  push:
+    branches: [main]
+    paths: ['incoming/**', 'decks/**', 'scripts/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: process-exports
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Process incoming exports
+        run: |
+          shopt -s nullglob
+          for d in incoming/*/; do
+            node scripts/add-deck.mjs "$d"
+            rm -rf "$d"
+          done
+      - name: Regenerate index
+        run: node scripts/add-deck.mjs --index
+      - name: Verify structure
+        run: node scripts/add-deck.mjs --check
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Process incoming exports"
+            git push
+          fi
