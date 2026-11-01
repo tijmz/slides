@@ -130,6 +130,30 @@ function addDeck(exportDir, opts) {
     if (fixed !== css) fs.writeFileSync(f, fixed, 'latin1');
   }
 
+  // 3c. Obsidian embeds (e.g. PDFs in iframes) can point at the vault's ../Assets/ folder, which
+  //     the export does not copy. Pull such files in from the vault (export/<deck>/../../Assets)
+  //     into the deck's own Assets/ and point the reference there.
+  const vaultAssets = [path.join(exportDir, '..', 'Assets'), path.join(exportDir, '..', '..', 'Assets')];
+  const htmlNow = fs.readFileSync(htmlPath, 'latin1');
+  const pulled = new Set();
+  const unresolved = new Set();
+  const fixedAssets = htmlNow.replace(/(["'])\.\.\/Assets\/([^"'#?]+)/g, (m, q, rel) => {
+    // latin1 round-trip: re-decode the raw bytes to get the real filename
+    const name = decodeURIComponent(Buffer.from(rel, 'latin1').toString('utf8'));
+    const src = vaultAssets.map((d) => path.join(d, name)).find((f) => fs.existsSync(f));
+    if (!src) {
+      unresolved.add(name);
+      return m;
+    }
+    fs.mkdirSync(path.join(deckPath, 'Assets'), { recursive: true });
+    fs.copyFileSync(src, path.join(deckPath, 'Assets', name));
+    pulled.add(name);
+    return `${q}Assets/${rel}`;
+  });
+  if (fixedAssets !== htmlNow) fs.writeFileSync(htmlPath, fixedAssets, 'latin1');
+  if (pulled.size) console.log(`assets    pulled from vault: ${[...pulled].join(', ')}`);
+  if (unresolved.size) console.warn(`WARNING   not found in vault Assets: ${[...unresolved].join(', ')}`);
+
   // 4. sanity: every rewritten reference must exist
   const missing = [];
   for (const m of rewritten.matchAll(/["']\.\.\/_shared\/[0-9a-f]+\/((?:dist|plugin)\/[^"'?#]+)/g)) {

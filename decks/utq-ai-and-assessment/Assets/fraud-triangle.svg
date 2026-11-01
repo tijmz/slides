@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 460" width="500" height="460" font-family="Arial, Helvetica, sans-serif">
+  <!-- Equilateral triangle: side 300, height 300 x sqrt(3)/2 = 259.81 -->
+  <polygon points="250,120 100,379.81 400,379.81" fill="#f4eaf3" stroke="#742167" stroke-width="5" stroke-linejoin="round"/>
+  <text x="250" y="294" text-anchor="middle" font-size="24" font-weight="700" fill="#742167">Fraud</text>
+  <circle cx="250" cy="120" r="18" fill="#bc0031" stroke="#fff" stroke-width="4"/>
+  <text x="250" y="34" text-anchor="middle" font-size="30" font-weight="700" fill="#bc0031">Opportunity</text>
+  <text x="250" y="60" text-anchor="middle" font-size="18" fill="#4a4a4a">the barrier to commit fraud</text>
+  <text x="250" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#bc0031">is lowered by GenAI</text>
+  <circle cx="100" cy="379.81" r="18" fill="#742167" stroke="#fff" stroke-width="4"/>
+  <text x="100" y="424" text-anchor="middle" font-size="30" font-weight="700" fill="#742167">Pressure</text>
+  <text x="100" y="448" text-anchor="middle" font-size="18" fill="#4a4a4a">deadlines, workload</text>
+  <circle cx="400" cy="379.81" r="18" fill="#742167" stroke="#fff" stroke-width="4"/>
+  <text x="392" y="424" text-anchor="middle" font-size="30" font-weight="700" fill="#742167">Rationalisation</text>
+  <text x="392" y="448" text-anchor="middle" font-size="18" fill="#4a4a4a">“it’s not valuable anyway”</text>
+</svg>
