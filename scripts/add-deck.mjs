@@ -4,6 +4,7 @@
 //   node scripts/add-deck.mjs <export-folder> [--name slug] [--title "Title"]
 //   node scripts/add-deck.mjs --index        (only regenerate index.html)
 //   node scripts/add-deck.mjs --check        (verify structure; exit 1 on problems)
+//   node scripts/add-deck.mjs --migrate      (point all decks at the current shared version, prune the rest)
 //
 // An export without dist/ and plugin/ (deck files only) is linked to the current
 // shared version (decks/_shared/CURRENT); a full export with new plugin or theme
@@ -241,6 +242,33 @@ ${items}
   console.log(`index     ${decks.length} deck(s) listed`);
 }
 
+// Point every deck at the current shared version (rewrites html/css references and deck.json).
+function migrateAll() {
+  const target = getCurrent();
+  if (!target || !fs.existsSync(path.join(sharedDir, target))) throw new Error('No current shared version');
+  const decks = fs
+    .readdirSync(decksDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && d.name !== '_shared');
+  for (const d of decks) {
+    const dir = path.join(decksDir, d.name);
+    const meta = readMeta(dir);
+    if (!meta.shared || meta.shared === target) continue;
+    const from = `_shared/${meta.shared}/`;
+    const to = `_shared/${target}/`;
+    let n = 0;
+    for (const f of walk(dir).filter((f) => /\.(html|css)$/.test(f))) {
+      const text = fs.readFileSync(f, 'latin1');
+      const next = text.split(from).join(to);
+      if (next !== text) {
+        n += text.split(from).length - 1;
+        fs.writeFileSync(f, next, 'latin1');
+      }
+    }
+    fs.writeFileSync(path.join(dir, 'deck.json'), JSON.stringify({ ...meta, shared: target }, null, 2) + '\n');
+    console.log(`migrated  ${d.name}: ${meta.shared} -> ${target} (${n} references)`);
+  }
+}
+
 // Verify the repo structure; returns the number of problems found.
 function checkAll() {
   const problems = [];
@@ -312,6 +340,12 @@ const exportDir = args.find((a) => !a.startsWith('--'));
 
 fs.mkdirSync(decksDir, { recursive: true });
 if (checkOnly) process.exit(checkAll() ? 1 : 0);
+if (args.includes('--migrate')) {
+  migrateAll();
+  pruneShared();
+  writeIndex();
+  process.exit(checkAll() ? 1 : 0);
+}
 if (!indexOnly) {
   if (!exportDir) {
     console.error('usage: node scripts/add-deck.mjs <export-folder> [--name slug] [--title "Title"]');
