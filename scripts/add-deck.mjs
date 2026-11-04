@@ -2,6 +2,7 @@
 // Add (or update) a Slides Extended export in this repo, sharing reveal.js assets.
 //
 //   node scripts/add-deck.mjs <export-folder> [--name slug] [--title "Title"]
+//   (add --date YYYY-MM-DD to set the date shown in the index; on updates it otherwise stays as first added)
 //   node scripts/add-deck.mjs --index        (only regenerate index.html)
 //   node scripts/add-deck.mjs --check        (verify structure; exit 1 on problems)
 //   node scripts/add-deck.mjs --migrate      (point all decks at the current shared version, prune the rest)
@@ -166,7 +167,7 @@ function addDeck(exportDir, opts) {
   const exportMeta = readMeta(exportDir); // optional deck.json shipped with the export
   const meta = {
     title: opts.title ?? exportMeta.title ?? prevMeta.title ?? (htmlTitle || path.basename(exportDir)),
-    added: prevMeta.added ?? new Date().toISOString().slice(0, 10),
+    added: opts.date ?? prevMeta.added ?? new Date().toISOString().slice(0, 10),
     shared: hash,
   };
   fs.writeFileSync(path.join(deckPath, 'deck.json'), JSON.stringify(meta, null, 2) + '\n');
@@ -334,6 +335,11 @@ const opt = (flag) => {
 };
 const name = opt('--name');
 const title = opt('--title');
+const date = opt('--date');
+if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+  console.error('--date must look like YYYY-MM-DD');
+  process.exit(1);
+}
 const indexOnly = args.includes('--index');
 const checkOnly = args.includes('--check');
 const exportDir = args.find((a) => !a.startsWith('--'));
@@ -351,7 +357,7 @@ if (!indexOnly) {
     console.error('usage: node scripts/add-deck.mjs <export-folder> [--name slug] [--title "Title"]');
     process.exit(1);
   }
-  addDeck(path.resolve(exportDir), { name, title });
+  addDeck(path.resolve(exportDir), { name, title, date });
   pruneShared();
 }
 writeIndex();

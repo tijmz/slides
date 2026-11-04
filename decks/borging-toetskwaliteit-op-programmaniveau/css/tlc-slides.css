@@ -122,14 +122,20 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 
 /* Two-lane slide: Slides Extended centres slide content vertically in a flex wrapper; top-align it instead,
    so the title sits at the same height as the top-aligned title position (64px) regardless of table height */
-.reveal .slides section.two-lane > div, .reveal .slides section.zoom-slide > div, .reveal .slides section.toetskaart > div, .reveal .slides section.top-title > div { justify-content: flex-start !important; padding-top: 64px; box-sizing: border-box; }
-.reveal .slides section.two-lane h1, .reveal .slides section.toetskaart h1, .reveal .slides section.top-title h1 { margin-top: 0; }
+.reveal .slides section.two-lane > div, .reveal .slides section.zoom-slide > div, .reveal .slides section.toetskaart > div, .reveal .slides section.top-title > div, .reveal .slides section.prog-slide > div { justify-content: flex-start !important; padding-top: 64px; box-sizing: border-box; }
+.reveal .slides section.two-lane h1, .reveal .slides section.toetskaart h1, .reveal .slides section.top-title h1, .reveal .slides section.prog-slide h1 { margin-top: 0; }
 
 /* Click-to-zoom figure (pure CSS, checkbox toggle): thumbnail right of the text, animates to cover the content area */
 .reveal section.zoom-slide ol { width: 520px; font-size: 0.85em; }
+.reveal section.zoom-slide .zoom-text { position: absolute; left: 38px; top: 140px; width: 360px; height: 450px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; font-size: 0.72em; }
+.reveal section.zoom-slide .zoom-callout { position: absolute; left: 420px; top: 140px; width: 430px; box-sizing: border-box; font-size: 0.72em; }
+.reveal section.zoom-slide .zoom-text ul, .reveal section.zoom-slide .zoom-callout ul { width: auto; font-size: 1em; }
+.reveal section.zoom-slide .zoom-callout .callout { margin: 0; }
+.reveal section.zoom-slide.zoom-side .zoom-text { width: 400px; }
+.reveal section.zoom-slide.zoom-side .zoomfig { left: 490px; top: 269px; width: 430px; height: 192px; }
 .reveal section.zoom-slide .zoomtoggle { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .reveal section.zoom-slide .zoomfig {
-  position: absolute; left: 565px; top: 310px; width: 390px; height: 145px; box-sizing: border-box;
+  position: absolute; left: 420px; top: 434px; width: 430px; height: 160px; box-sizing: border-box;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: #fff; border: 2px solid #d6d9e3; border-radius: 10px; cursor: zoom-in; z-index: 5;
   transition: left .6s cubic-bezier(.4,0,.2,1), top .6s cubic-bezier(.4,0,.2,1), width .6s cubic-bezier(.4,0,.2,1), height .6s cubic-bezier(.4,0,.2,1), box-shadow .6s;
@@ -139,3 +145,245 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 .reveal section.zoom-slide .zoomtoggle:checked + .zoomfig {
   left: -30px; top: 140px; width: 1020px; height: 500px; cursor: zoom-out; box-shadow: 0 6px 28px rgba(0,0,0,.18);
 }
+
+/* Slide number: bottom left, so it is not covered by the TLC logo in the bottom right corner */
+.reveal .slide-number { right: auto !important; left: 24px !important; bottom: 18px !important; background: transparent; color: #6b6b6b; font-family: Arial, Helvetica, sans-serif; font-size: 18px; z-index: 50; }
+/* Slide number on vertical slides ("6.1"): Reveal puts a 3px margin on each side of the dot (tuned for its 12px font); remove it */
+.reveal .slide-number-delimiter { margin: 0 !important; }
+
+/* Exercise callouts (> [!example] Title): box with TLC purple header (#742167, sampled from the TLC logo) */
+.reveal .callout[data-type="example"] {
+  background: #fff; border: 3px solid #742167; border-radius: 10px; padding: 0; margin: 0.6em 0; overflow: hidden; mix-blend-mode: normal; color: #1a1a1a;
+}
+.reveal .callout[data-type="example"] > .callout-title {
+  display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: #742167; color: #fff; font-weight: 700; line-height: 1.2;
+}
+.reveal .callout[data-type="example"] > .callout-title .callout-icon { color: #fff; display: flex; flex: none; }
+.reveal .callout[data-type="example"] > .callout-title .callout-icon i { color: #fff; }
+.reveal .callout[data-type="example"] > .callout-title .callout-title-inner { color: #fff; font-weight: 700; }
+.reveal .callout[data-type="example"] > .callout-content { padding: 14px 24px; background: #fff; color: #1a1a1a; }
+.reveal .callout[data-type="example"] > .callout-content > :first-child { margin-top: 0; }
+.reveal .callout[data-type="example"] > .callout-content > :last-child { margin-bottom: 0; }
+
+/* Title bar (opt-in: <!-- slide class="title-slide title-bar" ... -->): TLC purple bar under the title, left edge aligned with the text below */
+.reveal .title-slide.title-bar h1 { border-bottom: 8px solid #742167; padding-bottom: 0.3em; }
+
+/* Remark callouts (> [!caution] Title): UvA red accent instead of the plugin's orange, so purple stays reserved for exercises */
+.reveal .callout[data-type="caution"] { --callout-color: 188, 0, 49; background: #f6f6f6; border-radius: 4px; }
+.reveal .callout[data-type="caution"] > .callout-title { background: rgba(188, 0, 49, 0.12); color: #1a1a1a; }
+.reveal .callout[data-type="caution"] > .callout-title .callout-icon { color: #bc0031; }
+
+/* Best practices cards (slide class "top-title fraud-slide"): one card per corner of the fraud triangle */
+.reveal section.fraud-slide .fcards { display: flex; gap: 18px; align-items: stretch; margin-top: 18px; }
+.reveal section.fraud-slide .fcard { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; border: 2px solid #d6d9e3; border-radius: 12px; overflow: hidden; }
+.reveal section.fraud-slide .fhead { display: flex; align-items: center; gap: 12px; padding: 14px 14px; background: #f6f6f6; border-bottom: 4px solid #bc0031; }
+.reveal section.fraud-slide .fhead svg { flex: none; width: 56px; height: 52px; margin: 0; max-width: none; }
+.reveal section.fraud-slide .fhead .fs { display: block; font-size: 0.5em; letter-spacing: 0.06em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 3px; }
+.reveal section.fraud-slide .fhead .ft { display: block; font-size: 0.72em; font-weight: 700; color: #bc0031; line-height: 1.1; }
+.reveal section.fraud-slide .fcard ul { margin: 0; padding: 16px 18px 8px 36px; font-size: 0.62em; }
+.reveal section.fraud-slide .fcard li { margin-bottom: 0.6em; }
+
+/* Lane switching slides (classes "top-title lsw-slide", "top-title fraud-slide lsp-slide", "top-title fraud-slide lsw-teach-slide") */
+.reveal section.lsw-slide .lsw-sub, .reveal section.lsp-slide .lsw-sub { font-size: 22px; color: #6b6b6b; margin: 4px 0 0 0; }
+.reveal section.lsw-slide .lsw { position: relative; width: 884px; height: 462px; margin-top: 6px; }
+.reveal section.lsw-slide .lsw-stage { position: absolute; left: 0; top: 0; width: 884px; height: 500px; transform: scale(0.92); transform-origin: top left; }
+.reveal section.lsw-slide .lsw-layer { position: absolute; left: 0; top: 0; width: 884px; height: 480px; }
+.reveal section.lsw-slide .lsw-svg { position: absolute; left: 0; top: 0; width: 560px; height: 480px; overflow: visible; max-width: none; margin: 0; }
+.reveal section.lsw-slide .lsw-svg-wide { width: 884px; }
+.reveal .lsw-t { display: block; font-weight: 700; font-size: 24px; line-height: 1.15; }
+.reveal .lsw-s { display: block; font-size: 15px; line-height: 1.2; color: #6b6b6b; margin-top: 2px; }
+.reveal section.lsw-slide .lsw-box { position: absolute; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; padding: 8px 16px; background: #fff; border: 3px solid #9a9a9a; border-radius: 12px; }
+.reveal section.lsw-slide .lsw-lever { border-color: #bc0031; }
+.reveal section.lsw-slide .lsw-lever > .lsw-t { color: #bc0031; }
+.reveal section.lsw-slide .lsw-ilo { left: 300px; top: 360px; width: 220px; height: 84px; }
+.reveal section.lsw-slide .lsw-ass { left: 110px; top: 0; width: 300px; height: 226px; justify-content: flex-start; padding-top: 12px; }
+.reveal section.lsw-slide .lsw-teach { left: 0; top: 360px; width: 192px; height: 84px; }
+.reveal section.lsw-slide .lsw-chip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 8px; padding: 5px 10px; font-size: 18px; line-height: 1.2; background: #fdf0f3; border: 2px solid #bc0031; border-radius: 8px; }
+.reveal section.lsw-slide .lsw-chip i { flex-basis: 100%; font-style: normal; font-size: 14px; color: #6b6b6b; margin-top: 2px; }
+.reveal section.lsw-slide .lsw-chip-w { background: #f6f6f6; border-color: #9a9a9a; border-style: dashed; }
+.reveal .lsw-tag { font-size: 20px; font-weight: 700; color: #bc0031; }
+.reveal .lsw-tag-g { color: #6b6b6b; }
+.reveal section.lsw-slide .lsw-legend { position: absolute; left: 0; top: 456px; font-size: 15px; line-height: 1.6; color: #6b6b6b; }
+.reveal section.lsw-slide .lsw-pill { position: absolute; left: 190px; top: 256px; width: 130px; height: 74px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; text-align: center; background: #bc0031; border-radius: 14px; color: #fff; }
+.reveal section.lsw-slide .lsw-pill .lsw-t { font-size: 22px; }
+.reveal section.lsw-slide .lsw-pill .lsw-s { color: #fff; font-size: 13px; opacity: 0.92; }
+.reveal section.lsw-slide .lsw-lane { position: absolute; left: 600px; width: 284px; height: 70px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; padding: 6px 18px; background: #4a4a4a; border-radius: 12px; color: #fff; }
+.reveal section.lsw-slide .lsw-lane .lsw-s { color: #e3e3e3; }
+.reveal section.lsw-slide .lsw-l1 { top: 20px; }
+.reveal section.lsw-slide .lsw-l2 { top: 324px; }
+.reveal section.lsw-slide .lsw-ex { position: absolute; left: 650px; width: 196px; }
+.reveal section.lsw-slide .lsw-ex .lsw-s { text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; }
+.reveal section.lsw-slide .lsw-ex .lsw-e { display: block; font-size: 19px; line-height: 1.2; font-weight: 700; margin-top: 4px; }
+.reveal section.lsw-slide .lsw-ex1 { top: 130px; }
+.reveal section.lsw-slide .lsw-ex2 { top: 232px; }
+.reveal section.lsw-slide .lsw-divider { position: absolute; left: 560px; top: 0; width: 0; height: 440px; border-left: 2px solid #e3e3e3; }
+.reveal section.lsw-slide .lsw-eyebrow { position: absolute; left: 600px; top: 0; width: 284px; font-size: 13px; line-height: 1.25; letter-spacing: 0.05em; text-transform: uppercase; color: #6b6b6b; }
+.reveal section.lsw-slide .lsw-form { position: absolute; left: 600px; width: 284px; box-sizing: border-box; padding: 10px 14px; background: #fff; border: 3px solid #9a9a9a; border-radius: 12px; }
+.reveal section.lsw-slide .lsw-fe { top: 46px; height: 158px; }
+.reveal section.lsw-slide .lsw-fm { top: 292px; height: 114px; border-color: #bc0031; }
+.reveal section.lsw-slide .lsw-fh { display: flex; align-items: center; justify-content: space-between; }
+.reveal section.lsw-slide .lsw-ft { font-size: 20px; font-weight: 700; white-space: nowrap; }
+.reveal section.lsw-slide .lsw-badge { font-size: 15px; font-weight: 700; color: #fff; background: #4a4a4a; border-radius: 16px; padding: 3px 12px; white-space: nowrap; }
+.reveal section.lsw-slide .lsw-chip-ghost { background: #fff; border: 2px dashed #b5b5b5; color: #9a9a9a; }
+.reveal section.lsw-slide .lsw-chip-plain { background: #f6f6f6; border-color: #cfcfcf; color: #6b6b6b; }
+.reveal section.lsw-slide .lsw-mv { position: absolute; left: 716px; top: 236px; width: 168px; font-size: 15px; font-weight: 700; line-height: 1.2; color: #bc0031; white-space: nowrap; }
+.reveal section.lsw-slide .lsw-cap { position: absolute; left: 600px; top: 416px; width: 284px; font-size: 14px; line-height: 1.3; color: #6b6b6b; }
+/* Split the assessment form */
+.reveal section.lsp-slide .lsp { position: relative; width: 884px; height: 184px; margin-top: 10px; }
+.reveal section.lsp-slide .lsp-form { position: absolute; left: 0; top: 47px; width: 204px; height: 90px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; padding: 8px 16px; background: #fff; border: 3px solid #bc0031; border-radius: 12px; }
+.reveal section.lsp-slide .lsp-form .lsw-t { color: #bc0031; }
+.reveal section.lsp-slide .lsp-layer { position: absolute; left: 0; top: 0; width: 884px; height: 184px; }
+.reveal section.lsp-slide .lsp-svg { position: absolute; left: 0; top: 0; width: 884px; height: 184px; overflow: visible; max-width: none; margin: 0; }
+.reveal section.lsp-slide .lsp-crit { position: absolute; left: 340px; width: 544px; height: 72px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; background: #fdf0f3; border: 2px solid #bc0031; border-radius: 12px; }
+.reveal section.lsp-slide .lsp-c1 { top: 0; }
+.reveal section.lsp-slide .lsp-c2 { top: 112px; }
+.reveal section.lsp-slide .lsp-n { font-size: 26px; font-weight: 700; }
+.reveal section.lsp-slide .lsp-badge { font-size: 18px; font-weight: 700; color: #fff; background: #4a4a4a; border-radius: 20px; padding: 6px 18px; }
+.reveal section.lsp-slide .lsp-opts { margin-top: 40px; }
+.reveal section.lsp-slide .lsp-p { margin: 0; padding: 14px 18px 16px 18px; font-size: 0.62em; line-height: 1.25; }
+/* Effects on teaching */
+.reveal section.lsw-teach-slide .lsw-wide { margin-top: 28px; }
+.reveal section.lsw-teach-slide .lsw-opts { display: flex; gap: 14px; padding: 16px 18px; }
+.reveal section.lsw-teach-slide .lsw-opts span { flex: 1; text-align: center; padding: 10px 8px; font-size: 20px; line-height: 1.2; background: #fdf0f3; border: 2px solid #bc0031; border-radius: 10px; }
+
+/* Side-by-side slide (class "side-slide"): text left, picture right, both vertically centred */
+.reveal section.side-slide .side-text { position: absolute; left: 38px; top: 170px; width: 390px; height: 430px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; font-size: 0.72em; }
+.reveal section.side-slide .side-img { position: absolute; left: 450px; top: 170px; width: 472px; height: 430px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; }
+.reveal section.side-slide .side-img p { margin: 0; width: 100%; }
+.reveal section.side-slide .side-img img { display: block; margin: 0 auto; width: auto; height: auto; max-width: 100%; max-height: 430px; }
+
+/* Curriculum metro map (class "top-title cur-slide") */
+.reveal section.cur-slide .cur { position: relative; width: 884px; height: 480px; margin-top: 10px; }
+.reveal section.cur-slide .cur-svg { position: absolute; left: 0; top: 0; width: 884px; height: 400px; max-width: none; margin: 0; overflow: visible; }
+.reveal section.cur-slide .cur-layer { position: absolute; left: 0; top: 0; width: 884px; height: 480px; }
+.reveal section.cur-slide .cur-cap { position: absolute; left: 0; top: 410px; width: 800px; box-sizing: border-box; padding: 12px 20px; background: #f6f6f6; border-left: 6px solid #bc0031; border-radius: 4px; font-size: 22px; line-height: 1.3; }
+
+/* Switching goes both ways: diagram left, callout + zoom thumbnail right */
+.reveal section.zoom-slide.lsw-zoom .zoom-callout { left: 440px; top: 150px; width: 480px; }
+.reveal section.zoom-slide.lsw-zoom .zoomfig { left: 440px; top: 390px; width: 480px; height: 214px; }
+
+/* Assessment-form map (class "top-title map-slide"): chips are <details>, click to show the description */
+.reveal section.map-slide .map { position: relative; width: 920px; height: 489px; margin: 0 0 0 20px; }
+.reveal section.map-slide .map-inner { position: absolute; left: 0; top: 0; width: 884px; height: 470px; transform: scale(1.0407); transform-origin: 0 0; }
+.reveal section.map-slide .map-svg { position: absolute; left: 0; top: 0; width: 884px; height: 470px; max-width: none; margin: 0; }
+.reveal section.map-slide .mapc { position: absolute; margin: 0; }
+.reveal section.map-slide .mapchip { box-sizing: border-box; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; line-height: 15px; color: #1a1a1a; background: #fff; border: 1.5px solid #8a8a8a; border-radius: 10px; cursor: pointer; list-style: none; padding: 0 2px; }
+.reveal section.map-slide .mapchip::-webkit-details-marker { display: none; }
+.reveal section.map-slide .mapchip:hover { border-color: #bc0031; }
+.reveal section.map-slide .mapc[open] > .mapchip { border-color: #bc0031; border-width: 2.5px; }
+.reveal section.map-slide .mapdesc { position: absolute; z-index: 20; width: 290px; box-sizing: border-box; padding: 10px 14px; background: #fff; border: 2px solid #bc0031; border-radius: 12px; box-shadow: 0 6px 22px rgba(0,0,0,.2); font-size: 14px; line-height: 1.35; text-align: left; color: #1a1a1a; cursor: zoom-out; }
+.reveal section.map-slide .mapdesc b { color: #bc0031; }
+
+/* Presentation controls aligned with the slide number (both centred 27px above the bottom edge) */
+.reveal .slide-number { line-height: 18px !important; height: 18px; padding: 0 !important; left: 32px !important; }
+#customcontrols > button { display: none !important; }
+#customcontrols { bottom: 17px !important; line-height: 20px; }
+#customcontrols > ul { left: 100px !important; bottom: 17px !important; height: 20px; margin: 0 !important; padding: 0 !important; display: flex; align-items: center; }
+#customcontrols ul > li { float: none; height: 20px; margin: 0 6px 0 0; padding: 0; display: flex; align-items: center; }
+#customcontrols button { height: 20px; font-size: 20px; line-height: 20px; display: flex; align-items: center; }
+#customcontrols button i { line-height: 1; }
+
+/* Demo slide: prompt image left (vertically centred), generated PDF revealed on click right */
+.reveal section.demo-slide .demo-prompt { position: absolute; left: 6px; top: 140px; width: 452px; height: 530px; display: flex; align-items: center; }
+.reveal section.demo-slide .demo-prompt p { margin: 0; }
+.reveal section.demo-slide .demo-prompt img { display: block; width: 452px; max-width: 100%; height: auto; max-height: none; margin: 0; border-radius: 10px; }
+.reveal section.demo-slide .demo-pdf { position: absolute; left: 468px; top: 140px; width: 486px; height: 530px; }
+.reveal section.demo-slide .demo-pdf:not(.visible) { display: none; }
+.reveal section.demo-slide .demo-pdf iframe { display: block; width: 100%; height: 100%; border: 2px solid #d6d9e3; border-radius: 10px; background: #fff; box-sizing: border-box; }
+
+/* Mitigating the fraud triangle: text box vertically centred on the triangle */
+.reveal section.mitigate-slide split { align-items: center !important; }
+.reveal section.mitigate-slide split > ul { margin-top: 0; margin-bottom: 0; }
+.reveal section.mitigate-slide split p { margin: 0; }
+
+/* Alignment triangle on the exercise slide (class "top-title tri-slide") */
+.reveal section.tri-slide .tri-text { position: absolute; left: 38px; top: 150px; width: 440px; height: 450px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; font-size: 0.6em; line-height: 1.3; text-align: left; }
+.reveal section.tri-slide .tri-text ul { margin: 0; padding-left: 1.1em; }
+.reveal section.tri-slide .tri-text li { margin: 0 0 0.4em 0; }
+.reveal section.tri-slide .tri-text ul ul { margin-top: 0.3em; font-size: 0.9em; }
+.reveal section.tri-slide .tri-text ul ul li { margin-bottom: 0.2em; }
+.reveal section.tri-slide .tri { position: absolute; left: 500px; top: 150px; width: 420px; height: 440px; }
+.reveal section.tri-slide .tri-svg { position: absolute; left: 0; top: 0; width: 420px; height: 400px; overflow: visible; max-width: none; margin: 0; }
+.reveal section.tri-slide .tri-box { position: absolute; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; padding: 8px 14px; background: #fff; border: 3px solid #9a9a9a; border-radius: 12px; height: 84px; }
+.reveal section.tri-slide .tri-ass { left: 100px; top: 0; width: 220px; border-color: #bc0031; }
+.reveal section.tri-slide .tri-teach { left: 0; top: 300px; width: 160px; }
+.reveal section.tri-slide .tri-ilo { left: 260px; top: 300px; width: 160px; }
+.reveal section.tri-slide .tri-t { display: block; font-weight: 700; font-size: 24px; line-height: 1.15; }
+.reveal section.tri-slide .tri-ass .tri-t { color: #bc0031; }
+.reveal section.tri-slide .tri-s { display: block; font-size: 15px; line-height: 1.2; color: #6b6b6b; margin-top: 2px; }
+.reveal section.tri-slide .tri-cap { position: absolute; left: 0; top: 410px; width: 420px; text-align: center; font-size: 15px; color: #6b6b6b; }
+
+/* Break slides (class "break-slide") */
+.reveal section.break-slide { text-align: center; }
+.reveal section.break-slide h1 { font-size: 3.2em; margin: 0; }
+.reveal section.break-slide .break-time { display: inline-block; margin-top: 14px; padding: 10px 30px; border: 3px solid #bc0031; border-radius: 14px; font-size: 36px; font-weight: 700; color: #bc0031; }
+
+/* Exercise duration: white pill at the right end of the purple callout header */
+.reveal .callout[data-type="example"] > .callout-title .callout-title-inner { flex: 1; display: flex; align-items: center; gap: 12px; }
+.reveal .callout[data-type="example"] .ex-time { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 3px 14px; border-radius: 999px; background: #fff; color: #742167; font-size: 0.75em; font-weight: 700; white-space: nowrap; }
+.reveal .callout[data-type="example"] .ex-time i { color: #742167; font-size: 0.9em; }
+
+/* Appendix worksheet PDF */
+.ws-slide .ws-pdf {position:absolute; left:170px; top:165px; width:620px; height:505px;}
+.ws-slide .ws-pdf iframe {width:100%; height:100%; border:2px solid #d6d9e3; border-radius:10px; background:#fff;}
+
+/* Consideration chips inside an exercise callout: one row, indented to the bullet text */
+.reveal .callout .ex-chips {display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 6px 22px; font-size:0.68em; text-align:left;}
+.reveal .callout .ex-chips span {background:#f6f6f6; border:2px solid #742167; border-radius:999px; padding:2px 12px; line-height:1.4; white-space:nowrap;}
+
+/* UvA Implementation: stacked step cards left (label column + text), figure right */
+.reveal section.uva-slide .zoom-text {width:480px; left:38px; top:150px; height:480px; font-size:0.58em; line-height:1.3; text-align:left; gap:9px;}
+.reveal section.uva-slide .uva-step {display:flex; align-items:baseline; gap:14px; background:#f6f6f6; border:3px solid #f6f6f6; border-radius:12px; padding:9px 16px;}
+.reveal section.uva-slide .uva-tag {flex:none; width:112px; font-size:0.72em; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#6b6b6b;}
+.reveal section.uva-slide .uva-key {background:#fff; border-color:#bc0031;}
+.reveal section.uva-slide .uva-key .uva-tag {color:#bc0031;}
+.reveal section.uva-slide .zoomfig {left:545px; top:270px; width:380px; height:145px;}
+.reveal section.uva-slide .zoomtoggle:checked + .zoomfig {left:-30px; top:140px; width:1020px; height:500px;}
+
+/* Break slides: illustration between title and time */
+.reveal section.break-slide img { display: block; margin: 6px auto 0; max-width: none; max-height: none; width: 470px; height: auto; }
+.reveal section.break-slide p { margin: 0; }
+
+/* zoom-right: list on the left, zoom thumbnail on the right. Both are centred in the same free area
+   (below the title, above a bottom gap) via flex auto margins and calc(), so they stay aligned for any list length.
+   Tune with the variables below. */
+.reveal section.zoom-right { --fig-w: 390px; --fig-h: 145px; --area-top: 157px; --area-gap: 60px; }
+.reveal section.zoom-right > div { padding-bottom: var(--area-gap); }
+.reveal section.zoom-right ol { width: calc(100% - var(--fig-w) - 50px); margin-top: auto; margin-bottom: auto; }
+.reveal section.zoom-right .zoomfig {
+  width: var(--fig-w); height: var(--fig-h);
+  left: calc(100% - var(--fig-w) - 5px);
+  top: calc((var(--area-top) + 100% - var(--area-gap) - var(--fig-h)) / 2);
+}
+
+/* Step cards (used on zoom-right slides): numbered, colour-coded by level, joined by a dashed connector */
+.reveal section.zoom-right .strat-steps { position: relative; width: calc(100% - var(--fig-w) - 50px); margin: auto 0; display: flex; flex-direction: column; gap: 9px; font-size: 18px; line-height: 1.3; text-align: left; color: #1a1a1a; }
+.reveal section.zoom-right .strat-steps::before { content: ""; position: absolute; left: 29px; top: 28px; bottom: 28px; border-left: 2px dashed #c9c9c9; }
+.reveal section.zoom-right .strat-step { --c: #742168; --bg: #f3e9f1; position: relative; display: flex; align-items: center; gap: 14px; padding: 8px 14px 8px 12px; background: #f6f6f6; border-left: 5px solid var(--c); border-radius: 10px; }
+.reveal section.zoom-right .strat-step.lvl-prog { --c: #bc0031; --bg: #fbe6eb; }
+.reveal section.zoom-right .strat-step.lvl-eind { --c: #3d52c4; --bg: #e7eafa; }
+.reveal section.zoom-right .strat-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--c); color: #fff; font-weight: 700; font-size: 18px; line-height: 34px; text-align: center; box-shadow: 0 0 0 4px #fff; z-index: 1; }
+.reveal section.zoom-right .strat-body { flex: 1; min-width: 0; }
+.reveal section.zoom-right .strat-tag { display: block; width: fit-content; margin-bottom: 3px; padding: 1px 9px; border-radius: 9px; background: var(--bg); color: var(--c); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; line-height: 1.5; }
+.reveal section.zoom-right .strat-body strong { color: var(--c); }
+.reveal section.zoom-right .strat-tag + * { margin-top: 0; }
+
+/* prog-slide: bullets left, assessment-programme example table right (fields as rows, examples as columns, colour-coded by field group) */
+.reveal section.prog-slide ul { width: 290px; font-size: 0.7em; margin-top: 0; }
+.reveal section.prog-slide .prog-table { --g1: #742168; --g2: #bc0031; --g3: #3d52c4; --g4: #1b7f79; position: absolute; left: 326px; top: 157px; width: 634px; table-layout: fixed; border-collapse: separate; border-spacing: 0; margin: 0; font-size: 10.6px; line-height: 1.25; text-align: left; color: #1a1a1a; }
+.reveal section.prog-slide .prog-table th, .reveal section.prog-slide .prog-table td { padding: 2.5px 5px; border: none; border-bottom: 1px solid #ececf0; vertical-align: middle; font-weight: 400; }
+.reveal section.prog-slide .prog-table thead th { padding: 5px 6px; background: #1a1a1a; color: #fff; font-size: 10.6px; font-weight: 700; text-align: left; letter-spacing: .03em; }
+.reveal section.prog-slide .prog-table thead th:first-child { border-radius: 8px 0 0 0; }
+.reveal section.prog-slide .prog-table thead th:last-child { border-radius: 0 8px 0 0; }
+.reveal section.prog-slide .prog-table .lbl { width: 142px; font-weight: 700; color: #3a3a3a; background: #f6f6f8; border-left: 4px solid var(--gc, #ccc); }
+.reveal section.prog-slide .prog-table thead .lbl { background: #1a1a1a; color: #fff; border-left-color: #1a1a1a; }
+.reveal section.prog-slide .prog-table tr.band th { padding: 3px 8px; background: var(--gc); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; border-bottom: none; }
+.reveal section.prog-slide .prog-table .g1 { --gc: var(--g1); }
+.reveal section.prog-slide .prog-table .g2 { --gc: var(--g2); }
+.reveal section.prog-slide .prog-table .g3 { --gc: var(--g3); }
+.reveal section.prog-slide .prog-table .g4 { --gc: var(--g4); }
+.reveal section.prog-slide .prog-table td.lane { font-weight: 700; }
+.reveal section.prog-slide .prog-table td.l1 { color: #fff; background: var(--g1); }
+.reveal section.prog-slide .prog-table td.l2 { color: var(--g1); background: #f3e9f1; }
+.reveal section.prog-slide .prog-cap { position: absolute; left: 326px; width: 634px; top: 614px; margin: 0; font-size: 11px; color: #6b6b6b; text-align: left; }
+.reveal section.prog-slide .prog-cap strong { color: #bc0031; }

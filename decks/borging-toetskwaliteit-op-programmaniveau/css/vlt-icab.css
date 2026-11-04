@@ -59,13 +59,24 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 /* Controls: top right, clear of the footer. The arrows are anchored to the bottom edge of this box and extend upward (~100px), so the box sits ~125px below the top. */
 .reveal .controls { top: 125px !important; right: 24px !important; bottom: auto !important; left: auto !important; }
 
-/* Discreet conference tag, bottom left */
+/* Bottom-left status row: slide number, overview (grid) icon, conference tag. One shared centre line (14px + 12px from the bottom) */
+.reveal .slide-number { position: fixed !important; padding: 0 !important; margin: 0 !important; box-sizing: border-box; left: 26px !important; right: auto !important; top: auto !important; bottom: 14px !important; width: 24px; height: 24px; display: flex; align-items: center; background: none !important; font: 12px/1 Arial, Helvetica, sans-serif !important; letter-spacing: 0.12em; color: #9a9a9a !important; z-index: 40; }
+.reveal .slide-number a, .reveal .slide-number span { color: inherit !important; text-decoration: none; border: 0; }
+.reveal .slide-number a { display: flex; align-items: center; height: 24px; line-height: 1; font-size: 12px; }
+.reveal .slide-number span { display: block; line-height: 1; margin: 0; padding: 0; }
+ul:has(> #toggle-overview) { position: fixed !important; left: 56px !important; bottom: 14px !important; right: auto !important; top: auto !important; height: 24px; margin: 0 !important; padding: 0 !important; list-style: none; z-index: 40; }
+ul:has(> #toggle-overview) li { margin: 0; padding: 0; height: 24px; }
+ul:has(> #toggle-overview) button { width: 24px; height: 24px; padding: 0; display: flex; align-items: center; justify-content: center; color: #9a9a9a; background: none; border: 0; cursor: pointer; transition: color .15s; }
+ul:has(> #toggle-overview) button:hover { color: #bc0031; }
+ul:has(> #toggle-overview) button svg { width: 13px; height: 13px; }
 body::after {
   content: "ICAB26";
   position: fixed;
-  left: 1.4vw;
-  bottom: 0.9vw;
-  font: 12px Arial, Helvetica, sans-serif;
+  left: 92px;
+  bottom: 14px;
+  height: 24px;
+  line-height: 24px;
+  font: 12px/24px Arial, Helvetica, sans-serif;
   letter-spacing: 0.12em;
   color: #9a9a9a;
   z-index: 40;
@@ -121,3 +132,16 @@ body::after {
 .reveal section.thanks .thx-qr { flex: none; width: 200px; text-align: center; }
 .reveal section.thanks .thx-qr img { display: block; width: 190px; height: 190px; margin: 0 auto 10px; max-width: none; max-height: none; }
 .reveal section.thanks .thx-qr p { margin: 0; font-size: 0.5em; letter-spacing: 0.06em; text-transform: uppercase; color: #6b6b6b; }
+
+/* Infographic subslide: two portrait images side by side, below the controls and above the footer */
+.reveal .slides section .infog { position: absolute; top: calc(75px / var(--slide-scale)); left: 0; width: var(--slide-width); height: calc(var(--slide-height) - 75px / var(--slide-scale) - 62px); display: flex; justify-content: center; gap: 28px; }
+.reveal .slides section .infog p { margin: 0; height: 100%; }
+.reveal .slides section .infog img { display: block; height: 100%; width: auto; max-width: none; max-height: none; margin: 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+
+/* ToetsKaart link icons under the embed */
+
+.reveal section .tk-links { position: absolute; display: flex; gap: 10px; width: 620px; justify-content: flex-start; }
+.reveal section .tk-links a { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; box-sizing: border-box; color: #8d93a6; background: #fff; border: 1px solid #d6d9e3; border-radius: 50%; transition: color .15s, border-color .15s, box-shadow .15s, transform .15s; }
+.reveal section .tk-links a:hover { color: #bc0031; border-color: #bc0031; box-shadow: 0 2px 8px rgba(188,0,49,.18); transform: translateY(-1px); }
+.reveal section .tk-links svg { display: block; width: 17px; height: 17px; margin: 0; }
+.reveal section.thanks .thx-icons { position: static; width: auto; align-self: center; }
