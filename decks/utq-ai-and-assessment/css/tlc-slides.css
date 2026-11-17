@@ -122,8 +122,8 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 
 /* Two-lane slide: Slides Extended centres slide content vertically in a flex wrapper; top-align it instead,
    so the title sits at the same height as the top-aligned title position (64px) regardless of table height */
-.reveal .slides section.two-lane > div, .reveal .slides section.zoom-slide > div, .reveal .slides section.toetskaart > div, .reveal .slides section.top-title > div { justify-content: flex-start !important; padding-top: 64px; box-sizing: border-box; }
-.reveal .slides section.two-lane h1, .reveal .slides section.toetskaart h1, .reveal .slides section.top-title h1 { margin-top: 0; }
+.reveal .slides section.two-lane > div, .reveal .slides section.zoom-slide > div, .reveal .slides section.toetskaart > div, .reveal .slides section.top-title > div, .reveal .slides section.prog-slide > div { justify-content: flex-start !important; padding-top: 64px; box-sizing: border-box; }
+.reveal .slides section.two-lane h1, .reveal .slides section.toetskaart h1, .reveal .slides section.top-title h1, .reveal .slides section.prog-slide h1 { margin-top: 0; }
 
 /* Click-to-zoom figure (pure CSS, checkbox toggle): thumbnail right of the text, animates to cover the content area */
 .reveal section.zoom-slide ol { width: 520px; font-size: 0.85em; }
@@ -316,7 +316,7 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 /* Break slides (class "break-slide") */
 .reveal section.break-slide { text-align: center; }
 .reveal section.break-slide h1 { font-size: 3.2em; margin: 0; }
-.reveal section.break-slide .break-time { display: inline-block; margin-top: 28px; padding: 10px 30px; border: 3px solid #bc0031; border-radius: 14px; font-size: 36px; font-weight: 700; color: #bc0031; }
+.reveal section.break-slide .break-time { display: inline-block; margin-top: 14px; padding: 10px 30px; border: 3px solid #bc0031; border-radius: 14px; font-size: 36px; font-weight: 700; color: #bc0031; }
 
 /* Exercise duration: white pill at the right end of the purple callout header */
 .reveal .callout[data-type="example"] > .callout-title .callout-title-inner { flex: 1; display: flex; align-items: center; gap: 12px; }
@@ -339,3 +339,51 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 .reveal section.uva-slide .uva-key .uva-tag {color:#bc0031;}
 .reveal section.uva-slide .zoomfig {left:545px; top:270px; width:380px; height:145px;}
 .reveal section.uva-slide .zoomtoggle:checked + .zoomfig {left:-30px; top:140px; width:1020px; height:500px;}
+
+/* Break slides: illustration between title and time */
+.reveal section.break-slide img { display: block; margin: 6px auto 0; max-width: none; max-height: none; width: 470px; height: auto; }
+.reveal section.break-slide p { margin: 0; }
+
+/* zoom-right: content (steps/list) on the left, a column of two figures on the right: the zoomable thumbnail on top,
+   an illustration below. Everything is centred in the same free area (below the title, above a bottom gap) and the
+   right column is exactly as tall as the left content (--H), so top and bottom edges line up.
+   Tune with the variables below. */
+.reveal section.zoom-right { --fig-w: 390px; --fig-h: 145px; --area-top: 157px; --area-gap: 60px; --H: 420px; --g: 12px; --col-top: calc((var(--area-top) + 100% - var(--area-gap) - var(--H)) / 2); --col-left: calc(100% - var(--fig-w) - 5px); }
+.reveal section.zoom-right > div { padding-bottom: var(--area-gap); }
+.reveal section.zoom-right ol { width: calc(100% - var(--fig-w) - 50px); margin-top: auto; margin-bottom: auto; }
+.reveal section.zoom-right .zoomfig { width: var(--fig-w); height: var(--fig-h); left: var(--col-left); top: var(--col-top); }
+.reveal section.zoom-right .strat-figure { position: absolute; z-index: 1; left: var(--col-left); width: var(--fig-w); top: calc(var(--col-top) + var(--fig-h) + var(--g)); height: calc(var(--H) - var(--fig-h) - var(--g)); box-sizing: border-box; overflow: hidden; background: #fff; border: 2px solid #d6d9e3; border-radius: 10px; }
+.reveal section.zoom-right .strat-figure p { margin: 0; width: 100%; height: 100%; }
+.reveal section.zoom-right .strat-figure img { display: block; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; object-fit: cover; object-position: 30% 50%; }
+
+/* Step cards (used on zoom-right slides): numbered, colour-coded by level, joined by a dashed connector */
+.reveal section.zoom-right .strat-steps { position: relative; height: var(--H); width: calc(100% - var(--fig-w) - 50px); margin: auto 0; display: flex; flex-direction: column; gap: 9px; font-size: 18px; line-height: 1.3; text-align: left; color: #1a1a1a; }
+.reveal section.zoom-right .strat-steps::before { content: ""; position: absolute; left: 29px; top: 28px; bottom: 28px; border-left: 2px dashed #c9c9c9; }
+.reveal section.zoom-right .strat-step { flex: 1; --c: #742168; --bg: #f3e9f1; position: relative; display: flex; align-items: center; gap: 14px; padding: 8px 14px 8px 12px; background: #f6f6f6; border-left: 5px solid var(--c); border-radius: 10px; }
+.reveal section.zoom-right .strat-step.lvl-prog { --c: #bc0031; --bg: #fbe6eb; }
+.reveal section.zoom-right .strat-step.lvl-eind { --c: #3d52c4; --bg: #e7eafa; }
+.reveal section.zoom-right .strat-num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--c); color: #fff; font-weight: 700; font-size: 18px; line-height: 34px; text-align: center; box-shadow: 0 0 0 4px #fff; z-index: 1; }
+.reveal section.zoom-right .strat-body { flex: 1; min-width: 0; }
+.reveal section.zoom-right .strat-tag { display: block; width: fit-content; margin-bottom: 3px; padding: 1px 9px; border-radius: 9px; background: var(--bg); color: var(--c); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; line-height: 1.5; }
+.reveal section.zoom-right .strat-body strong { color: var(--c); }
+.reveal section.zoom-right .strat-tag + * { margin-top: 0; }
+
+/* prog-slide: bullets left, assessment-programme example table right (fields as rows, examples as columns, colour-coded by field group) */
+.reveal section.prog-slide ul { width: 290px; font-size: 0.7em; margin-top: 0; }
+.reveal section.prog-slide .prog-table { --g1: #742168; --g2: #bc0031; --g3: #3d52c4; --g4: #1b7f79; position: absolute; left: 326px; top: 157px; width: 634px; table-layout: fixed; border-collapse: separate; border-spacing: 0; margin: 0; font-size: 10.6px; line-height: 1.25; text-align: left; color: #1a1a1a; }
+.reveal section.prog-slide .prog-table th, .reveal section.prog-slide .prog-table td { padding: 2.5px 5px; border: none; border-bottom: 1px solid #ececf0; vertical-align: middle; font-weight: 400; }
+.reveal section.prog-slide .prog-table thead th { padding: 5px 6px; background: #1a1a1a; color: #fff; font-size: 10.6px; font-weight: 700; text-align: left; letter-spacing: .03em; }
+.reveal section.prog-slide .prog-table thead th:first-child { border-radius: 8px 0 0 0; }
+.reveal section.prog-slide .prog-table thead th:last-child { border-radius: 0 8px 0 0; }
+.reveal section.prog-slide .prog-table .lbl { width: 142px; font-weight: 700; color: #3a3a3a; background: #f6f6f8; border-left: 4px solid var(--gc, #ccc); }
+.reveal section.prog-slide .prog-table thead .lbl { background: #1a1a1a; color: #fff; border-left-color: #1a1a1a; }
+.reveal section.prog-slide .prog-table tr.band th { padding: 3px 8px; background: var(--gc); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; border-bottom: none; }
+.reveal section.prog-slide .prog-table .g1 { --gc: var(--g1); }
+.reveal section.prog-slide .prog-table .g2 { --gc: var(--g2); }
+.reveal section.prog-slide .prog-table .g3 { --gc: var(--g3); }
+.reveal section.prog-slide .prog-table .g4 { --gc: var(--g4); }
+.reveal section.prog-slide .prog-table td.lane { font-weight: 700; }
+.reveal section.prog-slide .prog-table td.l1 { color: #fff; background: var(--g1); }
+.reveal section.prog-slide .prog-table td.l2 { color: var(--g1); background: #f3e9f1; }
+.reveal section.prog-slide .prog-cap { position: absolute; left: 326px; width: 634px; top: 614px; margin: 0; font-size: 11px; color: #6b6b6b; text-align: left; }
+.reveal section.prog-slide .prog-cap strong { color: #bc0031; }

@@ -86,3 +86,72 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 
 /* vertical stacks: the outer wrapper must not add slide padding */
 .reveal .slides > section.stack, .reveal .slides > section:has(> section) { padding: 0; }
+
+/* Bottom-left status row (same as vlt-icab.css): slide number and overview (grid) icon share one centre line, 14px + 12px from the bottom */
+.reveal .slide-number { position: fixed !important; padding: 0 !important; margin: 0 !important; box-sizing: border-box; left: 26px !important; right: auto !important; top: auto !important; bottom: 14px !important; width: 24px; height: 24px; display: flex; align-items: center; background: none !important; font: 12px/1 Arial, Helvetica, sans-serif !important; letter-spacing: 0.12em; color: #9a9a9a !important; z-index: 40; white-space: nowrap; }
+.reveal .slide-number a, .reveal .slide-number span { color: inherit !important; text-decoration: none; border: 0; }
+.reveal .slide-number a { display: flex; align-items: center; height: 24px; line-height: 1; font-size: 12px; }
+.reveal .slide-number span { display: block; line-height: 1; margin: 0; padding: 0; }
+ul:has(> #toggle-overview) { position: fixed !important; left: 56px !important; bottom: 14px !important; right: auto !important; top: auto !important; height: 24px; margin: 0 !important; padding: 0 !important; list-style: none; z-index: 40; }
+ul:has(> #toggle-overview) li { margin: 0; padding: 0; height: 24px; }
+ul:has(> #toggle-overview) button { width: 24px; height: 24px; padding: 0; display: flex; align-items: center; justify-content: center; color: #9a9a9a; background: none; border: 0; cursor: pointer; transition: color .15s; }
+ul:has(> #toggle-overview) button:hover { color: #bc0031; }
+ul:has(> #toggle-overview) button svg { width: 13px; height: 13px; }
+
+/* ---- Tables (use <table class="vlt-table">) ---- */
+.reveal table.vlt-table { border-collapse: collapse; width: 100%; margin: 18px 0 0 0; font-size: 0.6em; line-height: 1.3; }
+.reveal table.vlt-table th { text-align: left; font-size: 0.72em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #bc0031; border: 0; border-bottom: 2px solid #bc0031; padding: 6px 12px; }
+.reveal table.vlt-table td { text-align: left; vertical-align: middle; border: 0; border-bottom: 1px solid #e3e3e3; padding: 8px 12px; }
+.reveal table.vlt-table tr.ygroup td { border-top: 1px solid #c8c8c8; }
+.reveal table.vlt-table tbody tr:first-child td { border-top: 0; }
+.reveal table.vlt-table td.vlt-year { vertical-align: top; font-weight: 700; color: #bc0031; white-space: nowrap; background: #f7f7f7; border-bottom: 1px solid #c8c8c8; }
+.reveal table.vlt-table td.vlt-code { font-family: Consolas, "Courier New", monospace; font-size: 0.9em; color: #6b6b6b; white-space: nowrap; }
+.reveal table.vlt-table td.vlt-code em { font-family: Arial, Helvetica, sans-serif; }
+.reveal table.vlt-table .vlt-sub { display: block; font-size: 0.78em; color: #6b6b6b; margin-top: 2px; }
+.reveal table.vlt-table td.vlt-course { font-weight: 600; }
+.reveal table.vlt-table-compact { font-size: 0.52em; }
+.reveal table.vlt-table-compact td { padding: 7px 10px; }
+.reveal table.vlt-table-compact th { padding: 6px 10px; }
+
+/* ---- LTO / Bloom pills and the compact LTO side panel ---- */
+.reveal .vlt-bloom { display: inline-block; font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; padding: 3px 9px; border-radius: 12px; white-space: nowrap; line-height: 1.3; }
+.reveal .vlt-bloom.l1 { background: #e8a0b0; color: #6e0f26; }
+.reveal .vlt-bloom.l2 { background: #d4506c; }
+.reveal .vlt-bloom.l3 { background: #bc0031; }
+.reveal .vlt-footnote { font-size: 0.55em; color: #6b6b6b; margin-top: 20px; }
+.reveal .vlt-two-col { display: flex; gap: 80px; align-items: center; width: 100%; }
+.reveal .vlt-two-col .vlt-col-main { flex: 1; min-width: 0; }
+.reveal .vlt-two-col .vlt-col-main ol, .reveal .vlt-two-col .vlt-col-main ul { margin-left: 1.1em; }
+.reveal .vlt-lto-panel { flex: 0 0 310px; font-size: 0.56em; line-height: 1.35; }
+.reveal .vlt-lto-panel-head { font-size: 0.85em; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 8px; }
+.reveal .vlt-lto-mini { background: #f7f7f7; border-left: 5px solid #bc0031; padding: 10px 12px; margin-bottom: 10px; }
+.reveal .vlt-lto-mini.l1 { border-left-color: #e8a0b0; }
+.reveal .vlt-lto-mini.l2 { border-left-color: #d4506c; }
+.reveal .vlt-lto-mini-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.reveal .vlt-lto-mini-top b { color: #bc0031; letter-spacing: 0.06em; font-size: 0.9em; }
+.reveal .vlt-lto-mini .vlt-bloom { font-size: 0.72em; }
+/* Slide number "h.v" shown as "h/v", so it reads like the URL (#/6/2) */
+.reveal .slide-number .slide-number-delimiter { font-size: 0 !important; }
+.reveal .slide-number .slide-number-delimiter::after { content: "/"; font-size: 12px; }
+/* First slide of a vertical stack: the URL has no "/1" (#/6), so show just "6" */
+.reveal:has(.slides > section.stack.present > section:first-child.present) .slide-number .slide-number-delimiter,
+.reveal:has(.slides > section.stack.present > section:first-child.present) .slide-number .slide-number-b { display: none !important; }
+
+/* Two-column work slide: lighter main column with numbered step badges, balanced against the LTO panel */
+.reveal .vlt-two-col .vlt-col-main { font-size: 0.7em; line-height: 1.4; }
+.reveal .vlt-two-col .vlt-col-main ol { list-style: none; counter-reset: vlt-step; margin: 0 !important; padding: 0; }
+.reveal .vlt-two-col .vlt-col-main ol li { counter-increment: vlt-step; position: relative; padding-left: 50px; margin: 0 0 20px 0; }
+.reveal .vlt-two-col .vlt-col-main ol li::before { content: counter(vlt-step); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; background: #bc0031; color: #fff; font-weight: 700; font-size: 0.8em; display: flex; align-items: center; justify-content: center; }
+.reveal .vlt-two-col .vlt-col-main ol li strong { color: #1a1a1a; }
+.reveal .vlt-two-col .vlt-col-main .vlt-footnote { font-size: 0.78em; margin-top: 8px; padding-left: 50px; }
+.reveal .vlt-two-col .vlt-lto-panel { font-size: 0.58em; flex: 0 0 max(220px, calc(480px - 15.2vw / var(--slide-scale, 1))); } /* left edge follows the red VLT footer banner (placed at 65.2vw) at any window size; the right edge stays on the slide edge */
+
+/* Review / discussion slide: 2x2 grid of question cards */
+.reveal .vlt-review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 16px; font-size: 0.62em; line-height: 1.4; }
+.reveal .vlt-review-card { background: #f7f7f7; border-top: 5px solid #bc0031; padding: 16px 20px 18px; }
+.reveal .vlt-review-head { display: flex; align-items: center; gap: 12px; font-weight: 700; color: #bc0031; letter-spacing: 0.04em; margin-bottom: 8px; }
+.reveal .vlt-review-num { flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%; background: #bc0031; color: #fff; font-size: 0.8em; display: flex; align-items: center; justify-content: center; }
+.reveal .vlt-review-q { color: #333; }
+.reveal .vlt-two-col .vlt-review-stack { flex: 1; min-width: 0; grid-template-columns: 1fr; gap: 14px; margin-top: 0; }
+.reveal .vlt-side-image { flex: 0 0 360px; }
+.reveal .vlt-side-image img { display: block; margin: 0; }
