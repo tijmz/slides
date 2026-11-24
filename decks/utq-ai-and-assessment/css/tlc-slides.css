@@ -387,3 +387,6 @@ html.vlt-title .reveal::after, .reveal.vlt-title::after {
 .reveal section.prog-slide .prog-table td.l2 { color: var(--g1); background: #f3e9f1; }
 .reveal section.prog-slide .prog-cap { position: absolute; left: 326px; width: 634px; top: 614px; margin: 0; font-size: 11px; color: #6b6b6b; text-align: left; }
 .reveal section.prog-slide .prog-cap strong { color: #bc0031; }
+
+/* "Circling back" slide: smaller subheading so the title clears the UvA header once the Open issues box is filled */
+.reveal section.circling-back h2 { font-size: 1.1em; }
